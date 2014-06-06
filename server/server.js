@@ -44,8 +44,8 @@ Meteor.methods({
   populateInitialList: function() {
 
     var user = Meteor.user();
-
     var existingLikelistItems = getCurrentLikelist(user);
+    if (existingLikelistItems.length > 0) throw new Meteor.Error(500, "Likelist is not empty.");
 
     // Retrive complete history from Foursquare API and check all venues
     HTTP.call(
