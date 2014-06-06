@@ -3,7 +3,7 @@ var foursquareApiVersion = '20131009';
 
 if (Meteor.isClient) {
   Template.hello.greeting = function () {
-    var greeting = "Welcome to foursquare-likelist";
+    var greeting = "Welcome to likelist";
     if (Meteor.user()){
       greeting += ", " + Meteor.user().profile.firstName;
     }
