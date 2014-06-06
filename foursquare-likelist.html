@@ -1,0 +1,28 @@
+<head>
+  <title>foursquare-likelist</title>
+</head>
+
+<body>
+  {{> hello}}
+  {{> loginButtons}}
+  {{#if currentUser}}
+    {{> likelist}}
+  {{/if}}
+</body>
+
+<template name="hello">
+  <h1>Hello World!</h1>
+  {{greeting}}
+  <!-- When you log in...  -->
+</template>
+
+<template name="likelist">
+  <div>
+    {{#if currentUser.likelist}}
+      <a href="{{currentUser.likelist.canonicalUrl}}">Go to my likelist on Foursquare</a>
+      <input type="button" id="populate" value="Populate initial likelist">
+    {{else}}
+      <input type="button" id="create" value="Create likelist">
+    {{/if}}
+  </div>
+</template>
