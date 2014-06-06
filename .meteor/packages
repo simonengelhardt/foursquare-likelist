@@ -8,3 +8,6 @@ accounts-ui
 accounts-foursquare
 http
 npm
+iron-router
+queue
+moment
