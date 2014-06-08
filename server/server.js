@@ -188,11 +188,9 @@ Router.map(function () {
             // schedule like checks
             var command = 'Meteor.call("processQueuedVenue", "' + user._id + '", "' + venue.id + '")';
             var now = moment();
-            // Queue.add({command: command, execute_after: now.add('hours', 1).toDate()});
-            // Queue.add({command: command, execute_after: now.add('hours', 3).toDate()});
-            // Queue.add({command: command, execute_after: now.add('days', 1).toDate()});
-            Queue.add({command: command, execute_after: now.add('minutes', 1).toDate()});
-            Queue.add({command: command, execute_after: now.add('minutes', 3).toDate()});
+            Queue.add({command: command, execute_after: now.add('hours', 1).toDate()});
+            Queue.add({command: command, execute_after: now.add('hours', 3).toDate()});
+            Queue.add({command: command, execute_after: now.add('days', 1).toDate()});
             console.log('Scheduled checks for venue ' + venue.id + ' for user ' + user._id);
           }
         }
