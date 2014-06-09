@@ -60,13 +60,8 @@ Meteor.methods({
         if (result.statusCode === 200){
           console.log('Checking ' + result.data.response.venues.count + ' venues for user ' + user._id)
 
-          // Allow 500 user requests per hour (the Foursquare API limit, see https://developer.foursquare.com/overview/ratelimits)
-          var userLimiter = new RateLimiter(500, 'hour');
-
           for (var i = result.data.response.venues.items.length - 1; i >= 0; i--) {
-            userLimiter.removeTokens(1, function(err, remainingRequests) {
-              checkVenue(user, result.data.response.venues.items[i].venue.id, existingLikelistItems);
-            });
+            checkVenue(user, result.data.response.venues.items[i].venue.id, existingLikelistItems);
           }
         }
         else console.log(error);
