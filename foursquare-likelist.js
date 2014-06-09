@@ -9,13 +9,9 @@ if (Meteor.isClient) {
 
   Template.likelist.events = {
     'click #create': function() {
-      Meteor.call('createList', function(error) {
+      Meteor.call('createList', function(error, result) {
         if (error) alert(error);
-      });
-    },
-    'click #populate': function() {
-      Meteor.call('populateInitialList', function(error) {
-        if (error) alert(error);
+        if (result) alert(result);
       });
     }
   }

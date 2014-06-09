@@ -35,38 +35,38 @@ Meteor.methods({
           canonicalUrl: result.data.response.list.canonicalUrl
         }}});
 
+        // Update local user variable so newly created list id is in there for the following logic
+        user = Meteor.user();
+
         console.log('Created new likelist ' + result.data.response.list.id + ' for user ' + Meteor.userId());
       } catch (e) {
         throw new Meteor.Error(500, 'Error creating new user. Could not create a new list on Foursquare to hold likes. Please try again.');
       }
-    }
-  },
-  populateInitialList: function() {
 
-    var user = Meteor.user();
-    var existingLikelistItems = getCurrentLikelist(user);
-    if (existingLikelistItems.length > 0) throw new Meteor.Error(500, "Likelist is not empty.");
+      // Retrive complete history from Foursquare API and check all venues
+      HTTP.call(
+        "GET",
+        "https://api.foursquare.com/v2/users/self/venuehistory",
+        {params: {
+                oauth_token: user.services.foursquare.accessToken,
+                v: foursquareApiVersion,
+                afterTimestamp: 0 //1401580800 // = 06/01/2014 (for debugging)
+        }},
+        function(error, result){
+          if (result.statusCode === 200){
+            console.log('Checking ' + result.data.response.venues.count + ' venues for user ' + user._id)
 
-    // Retrive complete history from Foursquare API and check all venues
-    HTTP.call(
-      "GET",
-      "https://api.foursquare.com/v2/users/self/venuehistory",
-      {params: {
-              oauth_token: user.services.foursquare.accessToken,
-              v: foursquareApiVersion,
-              afterTimestamp: 0 //1401580800 // = 06/01/2014 (for debugging)
-      }},
-      function(error, result){
-        if (result.statusCode === 200){
-          console.log('Checking ' + result.data.response.venues.count + ' venues for user ' + user._id)
-
-          for (var i = result.data.response.venues.items.length - 1; i >= 0; i--) {
-            checkVenue(user, result.data.response.venues.items[i].venue.id, existingLikelistItems);
+            var existingLikelistItems = [];
+            for (var i = result.data.response.venues.items.length - 1; i >= 0; i--) {
+              checkVenue(user, result.data.response.venues.items[i].venue.id, existingLikelistItems);
+            }
           }
+          else console.log(error);
         }
-        else console.log(error);
-      }
-    );
+      );
+
+      return "You likelist has been created. It is now being filled with likes from your history. This may take a while.";
+    }
   },
   processQueuedVenue: function(userId, venueId) {
     console.log('Processing queued venue ' + venueId + ' for user ' + userId);
