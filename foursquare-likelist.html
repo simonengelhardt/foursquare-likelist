@@ -5,7 +5,7 @@
 <body>
   {{> hello}}
   {{> loginButtons}}
-  <p>The first time you authorize the app, a list for holding liked venues will be created on Foursquare and your complete venue history will be checked for likes (this may take a while).</p>
+  <p>The first time you authorize the app and click the button below, a list for holding liked venues will be created on Foursquare and your complete venue history will be checked for likes (this may take a while).</p>
   <p>Subsequently, whenever you check in somewhere, likelist will check if you liked – or stopped liking – that venue 3 times: after an hour, again after 3 hours and the following day. <small>So if you like a venue more than 1 day after you were there, your list of likes will not be updated before the next time you check in there. This is due to technical limits from Foursquare.</small></p>
   {{#if currentUser}}
     {{> likelist}}
