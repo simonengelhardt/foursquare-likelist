@@ -4,10 +4,11 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-accounts-ui
 accounts-foursquare
 http
 npm
 iron-router
 queue
 moment
+bootstrap-3
+accounts-ui-bootstrap-3

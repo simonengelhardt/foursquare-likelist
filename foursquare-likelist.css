@@ -1,1 +1,23 @@
-/* CSS declarations go here */
+body {
+  padding: 15px 0;
+  text-align: center;
+}
+
+/* Narrow container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+
+.account {
+  margin-bottom: 15px;
+}
+
+.account > div {
+  display: inline-block;
+}
+
+.account .name {
+  margin-right: 0.5em;
+}
